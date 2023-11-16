@@ -7,7 +7,7 @@ from filters import *
 
 def main():
     #! defining your vessel here
-    vessel = MyShip(length=100,width=40, draft_full=18, draft_empty=4, plate_strength=15, max_DWT = 80000, OPEX = 1300000, design_speed = 14)
+    vessel = MyShip(length=100,width=40, draft_full=18, draft_empty=4, plate_strength=15, max_DWT = 80000, max_volume=100000, OPEX = 1300000, design_speed = 14)
 
 
     #! importing fixed data and contracts
