@@ -8,7 +8,19 @@ from filters import *
 def main():
     #! defining your vessel here
     #todo: is vessel volume a given parameter?
-    vessel = MyShip(length=100, width=40, draft_full=18, draft_empty=4, plate_strength=15, max_DWT = 80000, max_volume=100000, OPEX = 1300000, design_speed = 14, bunker_level=1400, ice_class=False)
+    vessel = MyShip(length=100, 
+                    width=40, 
+                    draft_full=18, 
+                    draft_empty=4, 
+                    plate_strength=15, 
+                    max_DWT = 80000, 
+                    max_volume=100000, 
+                    OPEX = 1300000, 
+                    design_speed = 14, 
+                    bunker_level=1400, 
+                    ice_class=False,            # must be True or False
+                    crane_capacity=0,           # either 0 or 25
+                    )
 
 
     #! importing fixed data and contracts
@@ -35,6 +47,10 @@ def main():
     
     contracts = ice_class_filter(vessel, contracts, port_data)
     print(f'After Ice-Class Filter: \t{contracts.shape[0]}')
+
+    contracts = crane_filter(vessel, contracts, port_data)
+    print(f'After Crane Filter: \t\t{contracts.shape[0]}')
+
 
 
 

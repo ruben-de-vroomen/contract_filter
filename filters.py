@@ -69,4 +69,22 @@ def ice_class_filter(vessel: MyShip, contracts, port_data):
     contracts_filter = contracts.loc[contracts['Departure Ice'] == False]
     contracts_filter = contracts.loc[contracts['Arrival Ice'] == False]
 
-    return contracts_filter 
+    return contracts_filter
+
+
+def crane_filter(vessel: MyShip, contracts, port_data):
+
+    if vessel.get('crane_capacity') > 0:
+        return contracts
+
+    port_dict_loading = pd.Series(port_data['Loading Capacity'].values,index=port_data['Name']).to_dict()
+    port_dict_unloading = pd.Series(port_data['Unloading Capacity'].values,index=port_data['Name']).to_dict()
+
+
+    contracts['Loading Rate'] = contracts['Start Port'].map(port_dict_loading)
+    contracts['Unloading Rate'] = contracts['Destination'].map(port_dict_unloading)
+
+    contracts_filter = contracts.loc[contracts['Loading Rate'] > 1]
+    contracts_filter = contracts.loc[contracts['Unloading Rate'] > 1]
+
+    return contracts_filter
