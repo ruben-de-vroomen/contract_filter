@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as numpy
 from ship import MyShip
 from filters import *
+from finances import financials
 
 
 
@@ -20,8 +21,11 @@ def main():
                     bunker_level=1400, 
                     ice_class=False,            # must be True or False
                     crane_capacity=0,           # either 0 or 25
+                    AIS_cost=100                     # either 0 or 100
                     )
 
+
+    my_loans = [(500_000, 0.091),(100_000, 0.051),]
 
     #! importing fixed data and contracts
     port_data = pd.read_csv('fixed_data/port_data.csv', delimiter=';')
@@ -50,6 +54,10 @@ def main():
 
     contracts = crane_filter(vessel, contracts, port_data)
     print(f'After Crane Filter: \t\t{contracts.shape[0]}')
+
+
+    #* Now we begin with some finances:
+    financials(vessel, contracts, port_data, my_loans)
 
 
 
