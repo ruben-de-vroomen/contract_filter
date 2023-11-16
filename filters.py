@@ -51,9 +51,22 @@ def draft_filter(vessel: MyShip, contracts, port_data):
 
     contracts_filter = contracts.loc[contracts['Actual Draft'] < contracts['Departure Limit']]
     contracts_filter = contracts.loc[contracts['Actual Draft'] < contracts['Arrival Limit']]
-    
-
-    
-
 
     return contracts_filter
+
+
+
+def ice_class_filter(vessel: MyShip, contracts, port_data):
+
+    if vessel.get('ice_class') == True:
+        return contracts
+
+    port_dict = pd.Series(port_data['Ice Class Required'].values,index=port_data['Name']).to_dict()
+    
+    contracts['Departure Ice'] = contracts['Start Port'].map(port_dict)
+    contracts['Arrival Ice'] = contracts['Destination'].map(port_dict)
+
+    contracts_filter = contracts.loc[contracts['Departure Ice'] == False]
+    contracts_filter = contracts.loc[contracts['Arrival Ice'] == False]
+
+    return contracts_filter 
