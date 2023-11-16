@@ -1,0 +1,15 @@
+"Cargo Type";"Density";"Cargo Length";"Cargo Width";"Minimum Floor Strength";"Transport on Deck"
+"Ballast";0.15;1;1;5;FALSE
+"Iron Ore";2.5;1;1;15;FALSE
+"Coal";0.833;1;1;5;FALSE
+"Steam Coal";1.105;1;1;10;FALSE
+"Grain";0.77;1;1;5;FALSE
+"Steel Products";7.85;4;2;20;FALSE
+"Woodproducts";1.854;55;1;10;TRUE
+"Bauxite";1.281;1;1;10;FALSE
+"Alumina";0.961;1;1;5;FALSE
+"Fertilizers";0.961;2;2;5;FALSE
+"Agribulk";0.667;1;1;5;FALSE
+"Minor Ores";2.225;1;1;15;FALSE
+"Manufactureds";0.562;25;15;5;TRUE
+"Project";0.25;75;24;10;TRUE
