@@ -12,12 +12,12 @@ class MyShip:
         self.OPEX = OPEX
         self.design_speed = design_speed
 
-    def get(self, param: string):
+    def get(self, param: str):
         param_dict = {
             'length' : self.length,
             'width' : self.width,
-            'draft_full': self.draft_full,
-            'draft_empty': self.draft_empty,
+            'draft_full': self.draft_max,
+            'draft_empty': self.draft_min,
             'plate_strength': self.plate_strength,
             'max_DWT': self.max_DWT,
             'max_vol': self.max_vol,
