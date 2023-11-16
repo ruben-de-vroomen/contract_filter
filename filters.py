@@ -28,5 +28,32 @@ def deck_strength_filter(vessel: MyShip, contracts, cargo_data):
 
     contracts_filter = contracts.loc[contracts['Floor Strength'] < vessel.get('plate_strength')]
 
+    return contracts_filter
+
+def draft_filter(vessel: MyShip, contracts, port_data):
+
+    #todo: check bunker level is in tonnes
+    #todo: check that this is true
+    contracts['Total DWT'] = contracts['Weight'] + vessel.get('bunker_level')
+
+    # first I need to calculate a draft for each contract
     
+    draft_rate = ((vessel.get('draft_max') - vessel.get('draft_min'))/(vessel.get('max_DWT')))
+    contracts['Actual Draft'] = draft_rate *  contracts['Total DWT'] + vessel.get('draft_min')
+
+
+    port_dict = pd.Series(port_data['Port Limit'].values,index=port_data['Name']).to_dict()
+
+    # next I need to check the departure ports for depth restriction
+    # next I check the arrival port for depth restriction
+    contracts['Departure Limit'] = contracts['Start Port'].map(port_dict)
+    contracts['Arrival Limit'] = contracts['Destination'].map(port_dict)
+
+    contracts_filter = contracts.loc[contracts['Actual Draft'] < contracts['Departure Limit']]
+    contracts_filter = contracts.loc[contracts['Actual Draft'] < contracts['Arrival Limit']]
+    
+
+    
+
+
     return contracts_filter
