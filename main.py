@@ -7,6 +7,7 @@ from filters import *
 
 def main():
     #! defining your vessel here
+    #todo: is vessel volume a given parameter?
     vessel = MyShip(length=100,width=40, draft_full=18, draft_empty=4, plate_strength=15, max_DWT = 80000, max_volume=100000, OPEX = 1300000, design_speed = 14)
 
 
@@ -22,6 +23,7 @@ def main():
     # weight filter
     contracts = weight_filter(vessel, contracts)
     contracts = volume_filter(vessel, contracts, cargo_data)
+    contracts = deck_strength_filter(vessel, contracts, cargo_data)
 
     print(contracts.shape)
 

@@ -10,12 +10,9 @@ def weight_filter(vessel: MyShip, contracts):
 
 
 def volume_filter(vessel: MyShip, contracts, cargo_data):
-
-    # print(cargo_data)
-
     cargo_dict = pd.Series(cargo_data['Density'].values,index=cargo_data['Cargo Type']).to_dict()
-    print(cargo_dict)
-    
+
+
     contracts['Density'] = contracts['Cargo'].map(cargo_dict)
         
     #todo: check the units of density tonnes/m^3 assumed now, also weight in tonnes
@@ -25,14 +22,11 @@ def volume_filter(vessel: MyShip, contracts, cargo_data):
 
     return  contracts_filter
 
-# def deck_strength(vessel: MyShip, contracts, cargo_data):
-    
-#     cargo_dict = pd.Series(cargo_data['Minimum Floor Strength'].values,index=cargo_data['Cargo Type']).to_dict()
-#     print(cargo_dict)
-    
-#     contracts.insert(-1, 'Minimum Floor Strength')
+def deck_strength_filter(vessel: MyShip, contracts, cargo_data):
+    cargo_dict = pd.Series(cargo_data['Minimum Floor Strength'].values,index=cargo_data['Cargo Type']).to_dict()
+    contracts['Floor Strength'] = contracts['Cargo'].map(cargo_dict)
 
-#     for index, row in contracts.iterrows():
-#         continue
+    contracts_filter = contracts.loc[contracts['Floor Strength'] < vessel.plate_strength]
+
     
-#     return contracts_filter
+    return contracts_filter
