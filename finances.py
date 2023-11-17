@@ -2,6 +2,8 @@ from ship import MyShip
 import pandas as pd
 from finance_calc.durations import duration
 from finance_calc.sailing import sailing_speed
+from finance_calc.port_fee import port_fee
+
 
 def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     
@@ -16,9 +18,12 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
 
     contracts = duration(vessel, contracts, port_data)
     contracts = sailing_speed(vessel, contracts, port_distances, fixed_costs)
+    contracts = port_fee(vessel, contracts, port_data)
+
+    contracts['Total Cost'] = contracts['Fuel Costs'] + contracts['Port Costs'] + contracts['Canal Costs'] + fixed_costs / (7*24)
 
      
-
+        # zie jij mijn output? error ergens
 
     '''
         Plan of Action:
@@ -29,17 +34,13 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
             1.d. Canal fees and Port fees can be determined #todo are these variable?
         2. With maximum sailing time, determine a minimum sailing speed, to bound the speed optimization #TODO
         3. Given the contract, optimize for the sailing speed #*DONE
-        4. Calculate the fuel costs used by the trip #? what is the fuel cost? given?
-        5. Ice breaker-costs, loading unloading costs...?
-        6. Determine the break even going rate given the costs
+        4. Calculate the fuel costs used by the trip #? what is the fuel cost? given? #* Done
+        5. Ice breaker-costs, loading unloading costs...? #! Not relevant, filtered out
+        6. Determine the break even going rate given the costs 
         7. How profitable? compare with given rate
         8. Sort on profitability (largest difference posted rate and break even rate?)
     '''
 
 
-    return contracts #!placeholder!!!
-
-def bunker_costs(vessel: MyShip, contracts, port_data, port_distances, loans):
-    
-
     return contracts
+

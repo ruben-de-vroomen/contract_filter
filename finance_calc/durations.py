@@ -11,13 +11,16 @@ def duration(vessel: MyShip, contracts, port_data):
     contracts['Arrival Wait Time'] = contracts['Destination'].map(port_dict_waiting)
 
     # loading time
-    contracts.loc[contracts['Loading Rate'] >= vessel.get('crane_capacity'), 'Loading Time'] = contracts['Weight'] / contracts['Loading Rate']
-    contracts.loc[contracts['Loading Rate'] < vessel.get('crane_capacity'), 'Loading Time'] = contracts['Weight'] / vessel.get('crane_capacity')
+    contracts.loc[contracts['Loading Rate'] >= vessel.get('crane_capacity'), 'Loading Time'] = contracts['Weight'] / (vessel.get('holds') * contracts['Loading Rate'])
+    contracts.loc[contracts['Loading Rate'] < vessel.get('crane_capacity'), 'Loading Time'] = contracts['Weight'] / (vessel.get('holds') *vessel.get('crane_capacity'))
 
     # unloading time
-    contracts.loc[contracts['Unloading Rate'] >= vessel.get('crane_capacity'), 'Unloading Time'] = contracts['Weight'] / contracts['Unloading Rate']
-    contracts.loc[contracts['Unloading Rate'] < vessel.get('crane_capacity'), 'Unloading Time'] = contracts['Weight'] / vessel.get('crane_capacity')
+    contracts.loc[contracts['Unloading Rate'] >= vessel.get('crane_capacity'), 'Unloading Time'] = contracts['Weight'] / (vessel.get('holds') *contracts['Unloading Rate'])
+    contracts.loc[contracts['Unloading Rate'] < vessel.get('crane_capacity'), 'Unloading Time'] = contracts['Weight'] / (vessel.get('holds') *vessel.get('crane_capacity'))
 
     contracts['Non-Sailing Time'] = contracts['Arrival Wait Time'] + contracts['Departure Wait Time'] + contracts['Loading Time'] + contracts['Unloading Time']
+    # is goed
+    # laten we weer min speed kijken
+    # print(contracts['Unloading Time'])
 
     return contracts

@@ -1,7 +1,7 @@
 import math as mt
 
 class MyShip:
-    def __init__(self,length, width, draft_full, draft_empty, plate_strength, max_DWT, max_volume, OPEX, design_speed, bunker_level, ice_class, crane_capacity, AIS_cost, consumption, consumption_hotel, bunker_value, GT):
+    def __init__(self,length, width, draft_full, draft_empty, plate_strength, max_DWT, max_volume, OPEX, design_speed, bunker_level, ice_class, crane_capacity, AIS_cost, consumption, consumption_hotel, bunker_value, GT, holds):
         self.length = length
         self.width = width
         self.draft_max = draft_full
@@ -18,7 +18,8 @@ class MyShip:
         self.consumption = consumption
         self.consumption_hotel = consumption_hotel
         self.bunker_value = bunker_value
-        self.GT = GT
+        self.GT = GT,
+        self.holds = holds
 
     def get(self, param: str):
         param_dict = {
@@ -38,7 +39,8 @@ class MyShip:
             'consumption' : self.consumption,
             'hotel' : self.consumption_hotel,
             'bunker_value': self.bunker_value,
-            'GT' : self.GT
+            'GT' : self.GT,
+            'holds' : self.holds,
         }
         return param_dict[param]
 

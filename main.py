@@ -26,6 +26,7 @@ def main():
                     consumption_hotel = 2,
                     bunker_value=300,            # needs to be updated continually
                     GT = 28905,
+                    holds=7,
                     )
 
 
@@ -63,7 +64,7 @@ def main():
     #* Now we begin with some finances:
     contracts = financials(vessel, contracts, port_data, distances, my_loans)
 
-
+    print(contracts)
 
 
 if __name__ == "__main__":
