@@ -21,7 +21,10 @@ def main():
                     bunker_level=1400, 
                     ice_class=False,            # must be True or False
                     crane_capacity=0,           # either 0 or 25
-                    AIS_cost=100                # either 0 or 100
+                    AIS_cost=100,               # either 0 or 100
+                    consumption = 50,
+                    consumption_hotel = 2,
+                    bunker_value=300            # needs to be updated continually
                     )
 
 

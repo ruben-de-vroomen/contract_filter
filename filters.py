@@ -90,10 +90,18 @@ def crane_filter(vessel: MyShip, contracts, port_data):
 
     return contracts_filter
 
-def width_filter(vessel: MyShip, cargo_data):
-    cargo_width = cargo_data['Width']
 
-    contracts_filter = cargo_data.loc[cargo_data['Cargo Width'] < vessel.get('Width')] #? klopt dit, is dit niet hatch width?
+# todo fix these filters
+def width_filter(vessel: MyShip, cargo_data):
+    cargo_width = cargo_data['Cargo Width']
+
+    contracts_filter = cargo_data.loc[cargo_data['Cargo Width'] <= 0.75*vessel.get('Width')] #? klopt dit, is dit niet hatch width?
     
     return contracts_filter 
-#todo length and width filters
+
+def Length_filter(vessel: MyShip, cargo_data): # deze is volgens mij overbodig
+    cargo_length = cargo_data['Cargo Length']
+
+    contracts_filter = cargo_data.loc[cargo_data['Cargo Length'] <= 0.75*vessel.get('Length')] #! pas op, hier staat nog vessel width
+    
+    return contracts_filter 

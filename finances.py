@@ -14,9 +14,9 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
             fixed_costs += weekly_interest
 
     contracts = duration(vessel, contracts, port_data)
-    contracts = sailing_speed(vessel, contracts, port_distances)
+    contracts = sailing_speed(vessel, contracts, port_distances, OPEX)
 
-    sailing_speed = 
+     
 
 
     '''
