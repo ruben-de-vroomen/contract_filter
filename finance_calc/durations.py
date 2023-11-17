@@ -18,5 +18,6 @@ def duration(vessel: MyShip, contracts, port_data):
     contracts.loc[contracts['Unloading Rate'] >= vessel.get('crane_capacity'), 'Unloading Time'] = contracts['Weight'] / contracts['Unloading Rate']
     contracts.loc[contracts['Unloading Rate'] < vessel.get('crane_capacity'), 'Unloading Time'] = contracts['Weight'] / vessel.get('crane_capacity')
 
-    # contracts['Max Sailing Time'] = contracts[]
+    contracts['Non-Sailing Time'] = contracts['Arrival Wait Time'] + contracts['Departure Wait Time'] + contracts['Loading Time'] + contracts['Unloading Time']
+
     return contracts

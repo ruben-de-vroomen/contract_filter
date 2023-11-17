@@ -24,7 +24,8 @@ def main():
                     AIS_cost=100,               # either 0 or 100
                     consumption = 50,
                     consumption_hotel = 2,
-                    bunker_value=300            # needs to be updated continually
+                    bunker_value=300,            # needs to be updated continually
+                    GT = 28905,
                     )
 
 

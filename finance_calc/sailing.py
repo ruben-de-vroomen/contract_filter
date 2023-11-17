@@ -32,11 +32,16 @@ def optimize_hourly(x, vessel: MyShip, single_contract, OPEX):
     OPEX_hour = OPEX / (7 * 24) + vessel.get('hotel') / 24 * vessel.get('bunker_value')
 
 
-    single_contract['Sailing Duration'] = single_contract['Voyage Distance'] / x
+    single_contract['Sailing Duration'] = single_contract['Voyage Distance'] / x + single_contract['Non-Sailing Time']
 
     loss_hour = -(single_contract['Total Value'] / single_contract['Sailing Duration']) + OPEX_hour + fuel_cost
 
     return loss_hour
+
+def consumption(x, vessel, single_contract):
+    adjusted_consumption = (((vessel.get('consumption')/24)*(x / vessel.get('design_speed'))**3 * (single_contract['Actual Draft'] / vessel.get('draft_max'))**(2/3)))
+    return adjusted_consumption
+
 
 def optimize_total(x, vessel: MyShip, single_contract, OPEX):
     single_contract['Sailing Duration'] = single_contract['Voyage Distance'] / x
@@ -51,10 +56,12 @@ def optimize_total(x, vessel: MyShip, single_contract, OPEX):
 
     return loss_total
 
+
 def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
     
     contracts = contracts.reset_index()  # make sure indexes pair with number of rows
     contracts['Voyage Distance'] = 0
+    contracts['Canal Costs'] = 0
 
     
     for idx, single_contract in contracts.iterrows():
@@ -67,6 +74,7 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
         port_distances = port_distances.loc[port_distances['Valid Voyage'] == True]
 
         if port_distances.shape[0] > 1 and panama_check == True or suez_check == True: #! THIS FUNCTION HAS NOT BEEN CALLED, OR TESTED
+            contracts.at[idx, 'Canal Costs'] = port_distances['Canal Fee'] * vessel.get('GT')
             contracts.at[idx, 'Voyage Distance'] = min(port_distances.at[0,'Distance Using Canal'], port_distances.at[1,'Distance Using Canal'])
             print(port_distances)
             
@@ -85,14 +93,13 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
     for idx, single_contract in contracts.iterrows():
         speed_optimal = minimize(optimize_total, args=(vessel, single_contract, OPEX), x0=10.0, bounds=bnds).x[0]
 
-        print(speed_optimal)
+        contracts.at[idx, 'Optimal Speed'] = speed_optimal
+        contracts.at[idx, 'Bunker Usage'] = consumption(speed_optimal, vessel, single_contract)
 
-        
+    for idx, single_contract in contracts.iterrows():
+        speed_minimal =     
 
-
-
-
-
+    contracts['Fuel Costs'] = contracts['Bunker Usage'] * vessel.get('bunker_value')
     return contracts
 
 
