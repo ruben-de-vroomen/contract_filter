@@ -25,7 +25,7 @@ def main():
                     )
 
 
-    my_loans = [(500_000, 0.091),(100_000, 0.051),]
+    my_loans = [(500_000, 0.091),(100_000, 0.051),] # <- your loans here
 
     #! importing fixed data and contracts
     port_data = pd.read_csv('fixed_data/port_data.csv', delimiter=';')
@@ -57,7 +57,7 @@ def main():
 
 
     #* Now we begin with some finances:
-    contracts = financials(vessel, contracts, port_data, my_loans)
+    contracts = financials(vessel, contracts, port_data, distances, my_loans)
 
 
 
