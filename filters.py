@@ -49,7 +49,7 @@ def draft_filter(vessel: MyShip, contracts, port_data):
     contracts['Departure Limit'] = contracts['Start Port'].map(port_dict)
     contracts['Arrival Limit'] = contracts['Destination'].map(port_dict)
 
-    contracts_filter = contracts.loc[contracts['Actual Draft'] < contracts['Departure Limit']]
+    contracts = contracts.loc[contracts['Actual Draft'] < contracts['Departure Limit']]
     contracts_filter = contracts.loc[contracts['Actual Draft'] < contracts['Arrival Limit']]
 
     return contracts_filter
@@ -66,7 +66,7 @@ def ice_class_filter(vessel: MyShip, contracts, port_data):
     contracts['Departure Ice'] = contracts['Start Port'].map(port_dict)
     contracts['Arrival Ice'] = contracts['Destination'].map(port_dict)
 
-    contracts_filter = contracts.loc[contracts['Departure Ice'] == False]
+    contracts = contracts.loc[contracts['Departure Ice'] == False]
     contracts_filter = contracts.loc[contracts['Arrival Ice'] == False]
 
     return contracts_filter
@@ -84,7 +84,16 @@ def crane_filter(vessel: MyShip, contracts, port_data):
     contracts['Loading Rate'] = contracts['Start Port'].map(port_dict_loading)
     contracts['Unloading Rate'] = contracts['Destination'].map(port_dict_unloading)
 
-    contracts_filter = contracts.loc[contracts['Loading Rate'] > 1]
+    contracts = contracts.loc[contracts['Loading Rate'] > 1]
     contracts_filter = contracts.loc[contracts['Unloading Rate'] > 1]
 
+
     return contracts_filter
+
+def width_filter(vessel: MyShip, cargo_data):
+    cargo_width = cargo_data['Width']
+
+    contracts_filter = cargo_data.loc[cargo_data['Cargo Width'] < vessel.get('Width')] #? klopt dit, is dit niet hatch width?
+    
+    return contracts_filter 
+#todo length and width filters

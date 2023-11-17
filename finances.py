@@ -1,6 +1,25 @@
 from ship import MyShip
 import pandas as pd
 
+def duration(vessel: MyShip, contracts, port_data):
+    #* ALL DURATION CALCULATIONS TO BE DONE IN HOURS
+    
+    # Waiting times
+    port_dict_waiting = pd.Series(port_data['Waiting Time'].values*24,index=port_data['Name']).to_dict()
+    
+    contracts['Departure Wait Time'] = contracts['Start Port'].map(port_dict_waiting)
+    contracts['Arrival Wait Time'] = contracts['Destination'].map(port_dict_waiting)
+
+    # loading time
+    contracts.loc[contracts['Loading Rate'] >= vessel.get('crane_capacity'), 'Loading Time'] = contracts['Weight'] / contracts['Loading Rate']
+    contracts.loc[contracts['Loading Rate'] < vessel.get('crane_capacity'), 'Loading Time'] = contracts['Weight'] / vessel.get('crane_capacity')
+    print(contracts)
+    # contracts['Loading Time'] = 
+
+    # unloading time
+    
+    
+    return contracts #! warning!
 
 def financials(vessel: MyShip, contracts, port_data, loans):
     
@@ -11,6 +30,8 @@ def financials(vessel: MyShip, contracts, port_data, loans):
         for loan in loans:
             weekly_interest = (loan[0] * loan[1]) / 52
             fixed_costs += weekly_interest
+
+    duration(vessel, contracts, port_data)
 
     '''
         Plan of Action:
@@ -28,4 +49,7 @@ def financials(vessel: MyShip, contracts, port_data, loans):
         8. Sort on profitability (largest difference posted rate and break even rate?)
     '''
 
+
     return contracts #!placeholder!!!
+
+

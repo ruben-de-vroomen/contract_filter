@@ -21,7 +21,7 @@ def main():
                     bunker_level=1400, 
                     ice_class=False,            # must be True or False
                     crane_capacity=0,           # either 0 or 25
-                    AIS_cost=100                     # either 0 or 100
+                    AIS_cost=100                # either 0 or 100
                     )
 
 
@@ -57,7 +57,7 @@ def main():
 
 
     #* Now we begin with some finances:
-    financials(vessel, contracts, port_data, my_loans)
+    contracts = financials(vessel, contracts, port_data, my_loans)
 
 
 
