@@ -20,10 +20,12 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts = sailing_speed(vessel, contracts, port_distances, fixed_costs)
     contracts = port_fee(vessel, contracts, port_data)
 
+    #TODO Check total cost assumption
     contracts['Total Cost'] = contracts['Fuel Costs'] + contracts['Port Costs'] + contracts['Canal Costs'] + fixed_costs / (7*24)
 
-     
-        # zie jij mijn output? error ergens
+    contracts['Break Even Rate'] = contracts['Total Cost'] / contracts['Weight']
+    contracts['Profit'] = contracts['Total Value'] - contracts['Total Cost']
+    
 
     '''
         Plan of Action:
@@ -36,9 +38,10 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
         3. Given the contract, optimize for the sailing speed #*DONE
         4. Calculate the fuel costs used by the trip #? what is the fuel cost? given? #* Done
         5. Ice breaker-costs, loading unloading costs...? #! Not relevant, filtered out
-        6. Determine the break even going rate given the costs 
-        7. How profitable? compare with given rate
+        6. Determine the break even going rate given the costs #* DONE
+        7. How profitable? compare with given rate #* DONE
         8. Sort on profitability (largest difference posted rate and break even rate?)
+        9. Fix Currency Issue #! Critical Issue
     '''
 
 

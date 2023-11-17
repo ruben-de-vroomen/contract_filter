@@ -8,7 +8,6 @@ from finances import financials
 
 def main():
     #! defining your vessel here
-    #todo: is vessel volume a given parameter?
     vessel = MyShip(length=100, 
                     width=40, 
                     draft_full=18, 
@@ -64,7 +63,9 @@ def main():
     #* Now we begin with some finances:
     contracts = financials(vessel, contracts, port_data, distances, my_loans)
 
-    print(contracts)
+    contracts = contracts.sort_values('Profit', ascending=False)
+
+    contracts.to_csv('output.csv')
 
 
 if __name__ == "__main__":
