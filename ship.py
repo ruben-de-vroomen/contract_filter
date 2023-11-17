@@ -29,7 +29,7 @@ class MyShip:
             'max_DWT': self.max_DWT,
             'max_vol': self.max_vol,
             'OPEX' : self.OPEX,
-            'design_speed' : self.design_speed,
+            'design_speed' : float(self.design_speed),
             'bunker_level' : self.bunker_level,
             'ice_class' : self.ice_class,
             'crane_capacity' : self.crane,

@@ -16,7 +16,7 @@ def main():
                     plate_strength=15, 
                     max_DWT = 80000, 
                     max_volume=100000, 
-                    OPEX = 1300000, 
+                    OPEX = 2_200_000, 
                     design_speed = 14, 
                     bunker_level=1400, 
                     ice_class=False,            # must be True or False

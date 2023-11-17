@@ -3,7 +3,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 import pandas as pd
 from ship import MyShip
-from scipy.optimize import fmin
+from scipy.optimize import minimize
 
 # todo finish this
 def canal_check(vessel: MyShip, single_contract):
@@ -23,21 +23,35 @@ def canal_check(vessel: MyShip, single_contract):
 
     return suez_check, panama_check
 
-def optimize_hourly(vessel: MyShip, single_contract, OPEX, vs):
+def optimize_hourly(x, vessel: MyShip, single_contract, OPEX):
 
-    adjusted_consumption = (vessel.get('consumption')*(vs / vessel.get('design_speed'))**3 * (single_contract['Actual Draft'] / vessel.get('draft_max'))**(2/3))/24
-    fuel_cost = adjusted_consumption(speed_guess) * vessel.get('bunker_value') * (contracts['Voyage Distance'] / speed_guess)
+    adjusted_consumption = (((vessel.get('consumption')/24)*(x / vessel.get('design_speed'))**3 * (single_contract['Actual Draft'] / vessel.get('draft_max'))**(2/3)))[0]
+
+    fuel_cost = adjusted_consumption * vessel.get('bunker_value') #* (single_contract['Voyage Distance'] / x)
 
     OPEX_hour = OPEX / (7 * 24) + vessel.get('hotel') / 24 * vessel.get('bunker_value')
 
 
-    single_contract['Sailing Duration'] = single_contract['Voyage Distance'] / vs
+    single_contract['Sailing Duration'] = single_contract['Voyage Distance'] / x
 
-    loss_hour = -(single_contract['Total Value'] / contract['Sailing Duration']) + OPEX_hour + fuel_cost
+    loss_hour = -(single_contract['Total Value'] / single_contract['Sailing Duration']) + OPEX_hour + fuel_cost
 
     return loss_hour
 
-def sailing_speed(vessel: MyShip, contracts, distances):
+def optimize_total(x, vessel: MyShip, single_contract, OPEX):
+    single_contract['Sailing Duration'] = single_contract['Voyage Distance'] / x
+    
+    # (total costs)
+    adjusted_consumption = (((vessel.get('consumption')/24)*(x / vessel.get('design_speed'))**3 * (single_contract['Actual Draft'] / vessel.get('draft_max'))**(2/3)))[0]
+    fuel_cost = adjusted_consumption * vessel.get('bunker_value') * single_contract['Sailing Duration']
+
+    OPEX_total = (OPEX / (7 * 24) + vessel.get('hotel') / 24 * vessel.get('bunker_value') ) * single_contract['Sailing Duration']
+    
+    loss_total = fuel_cost + OPEX_total - single_contract['Total Value']
+
+    return loss_total
+
+def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
     
     contracts = contracts.reset_index()  # make sure indexes pair with number of rows
     contracts['Voyage Distance'] = 0
@@ -66,10 +80,14 @@ def sailing_speed(vessel: MyShip, contracts, distances):
 
     contracts['Total Value'] = contracts['Rate'] * contracts['Weight']
 
+    bnds = [(1.0, vessel.get('design_speed'))]
+
     for idx, single_contract in contracts.iterrows():
-        initial_guess_speed = 10
+        speed_optimal = minimize(optimize_total, args=(vessel, single_contract, OPEX), x0=10.0, bounds=bnds).x[0]
 
+        print(speed_optimal)
 
+        
 
 
 
