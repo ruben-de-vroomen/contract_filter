@@ -67,6 +67,7 @@ def main():
 
     contracts.to_csv('output.csv')
 
+    print(contracts)
 
 if __name__ == "__main__":
     main()
