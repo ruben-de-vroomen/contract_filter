@@ -98,7 +98,7 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
 
         contracts.at[idx, 'Optimal Speed'] = speed_optimal
         contracts.at[idx, 'Sailing Duration'] = contracts.at[idx, 'Voyage Distance'] / speed_optimal
-        contracts.at[idx, 'Bunker Usage'] = consumption(speed_optimal, vessel, single_contract)
+        contracts.at[idx, 'Bunker Usage'] = consumption(speed_optimal, vessel, single_contract) * single_contract['Sailing Duration']
 
     
     contracts['Minimum Speed'] = contracts['Voyage Distance'] / (contracts['Duration']*7*24 - contracts['Non-Sailing Time']) 
