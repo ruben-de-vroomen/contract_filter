@@ -26,7 +26,9 @@ def deck_strength_filter(vessel: MyShip, contracts, cargo_data):
     cargo_dict = pd.Series(cargo_data['Minimum Floor Strength'].values,index=cargo_data['Cargo Type']).to_dict()
     contracts['Floor Strength'] = contracts['Cargo'].map(cargo_dict)
 
-    contracts_filter = contracts.loc[contracts['Floor Strength'] < vessel.get('plate_strength')]
+    print(contracts['Floor Strength'])
+
+    contracts_filter = contracts.loc[contracts['Floor Strength'] <= vessel.get('plate_strength')]
 
     return contracts_filter
 
