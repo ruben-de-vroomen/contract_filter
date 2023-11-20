@@ -50,7 +50,7 @@ def optimize_total(x, vessel: MyShip, single_contract, OPEX):
     adjusted_consumption = (((vessel.get('consumption')/24)*(x / vessel.get('design_speed'))**3 * (single_contract['Actual Draft'] / vessel.get('draft_max'))**(2/3)))[0]
     fuel_cost = adjusted_consumption * vessel.get('bunker_value') * single_contract['Sailing Duration']
 
-    OPEX_total = (OPEX / (7 * 24) + vessel.get('hotel') / 24 * vessel.get('bunker_value') ) * single_contract['Sailing Duration']
+    OPEX_total = (OPEX / (7 * 24) ) * single_contract['Sailing Duration']
     
     loss_total = fuel_cost + OPEX_total - single_contract['Total Value']
 

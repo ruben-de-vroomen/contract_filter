@@ -8,7 +8,10 @@ from finance_calc.port_fee import port_fee
 def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     
     # determine the weekly fixed costs
-    fixed_costs = vessel.get('OPEX') / 52 + vessel.get('AIS')
+    fixed_costs = vessel.get('OPEX') / 52 + vessel.get('AIS') + vessel.get('hotel')* 7 * vessel.get('bunker_value')
+
+    #* CAPEX costs?
+    # capital_costs = 
     
     if loans != []:
         for loan in loans:

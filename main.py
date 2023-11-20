@@ -65,9 +65,11 @@ def main():
 
     contracts = contracts.sort_values('Profit', ascending=False)
 
-    contracts.to_csv('output.csv')
+    concat = contracts[['Type', 'Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time']]
 
-    print(contracts)
+    concat.to_csv('output.csv')
+
+    print(concat.columns)
 
 if __name__ == "__main__":
     main()
