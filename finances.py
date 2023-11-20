@@ -24,7 +24,8 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts = port_fee(vessel, contracts, port_data)
 
     #TODO Check total cost assumption
-    contracts['Total Cost'] = contracts['Fuel Costs'] + contracts['Port Costs'] + contracts['Canal Costs'] + fixed_costs / (7*24)
+    contracts['Fixed Costs'] = (fixed_costs / (7*24)) * contracts['Sailing Duration']
+    contracts['Total Cost'] = contracts['Fuel Costs'] + contracts['Port Costs'] + contracts['Canal Costs'] + contracts['Fixed Costs']
 
     contracts['Break Even Rate'] = contracts['Total Cost'] / contracts['Weight']
     contracts['Profit'] = contracts['Total Value'] - contracts['Total Cost']
