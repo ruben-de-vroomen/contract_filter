@@ -1,5 +1,6 @@
 from ship import MyShip
 import pandas as pd
+pd.options.mode.chained_assignment = None  # default='warn'
 
 def weight_filter(vessel: MyShip, contracts):
     cargo_weight = contracts['Weight']
@@ -74,9 +75,6 @@ def ice_class_filter(vessel: MyShip, contracts, port_data):
 
 def crane_filter(vessel: MyShip, contracts, port_data):
 
-    if vessel.get('crane_capacity') > 0:
-        return contracts
-
     port_dict_loading = pd.Series(port_data['Loading Capacity'].values,index=port_data['Name']).to_dict()
     port_dict_unloading = pd.Series(port_data['Unloading Capacity'].values,index=port_data['Name']).to_dict()
 
@@ -84,8 +82,12 @@ def crane_filter(vessel: MyShip, contracts, port_data):
     contracts['Loading Rate'] = contracts['Start Port'].map(port_dict_loading)
     contracts['Unloading Rate'] = contracts['Destination'].map(port_dict_unloading)
 
-    contracts = contracts.loc[contracts['Loading Rate'] > 1]
-    contracts_filter = contracts.loc[contracts['Unloading Rate'] > 1]
+
+    if vessel.get('crane_capacity') > 0:
+        return contracts
+    else:
+        contracts = contracts.loc[contracts['Loading Rate'] > 1]
+        contracts_filter = contracts.loc[contracts['Unloading Rate'] > 1]
 
 
     return contracts_filter
