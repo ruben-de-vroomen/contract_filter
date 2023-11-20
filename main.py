@@ -51,23 +51,29 @@ def main():
     contracts = weight_filter(vessel, contracts)
     print(f'After Weight Filter: \t\t{contracts.shape[0]}')
 
+    # max volume filter
     contracts = volume_filter(vessel, contracts, cargo_data)
     print(f'After Volume Filter: \t\t{contracts.shape[0]}')
     
+    # deck strength filter
     contracts = deck_strength_filter(vessel, contracts, cargo_data)
     print(f'After Deck Strength Filter: \t{contracts.shape[0]}')
     
+    # maximum draft filter
     contracts = draft_filter(vessel, contracts, port_data)
     print(f'After Draft Filter: \t\t{contracts.shape[0]}')
     
+    # ice-class filter
     contracts = ice_class_filter(vessel, contracts, port_data)
     print(f'After Ice-Class Filter: \t{contracts.shape[0]}')
 
+    # crane filter
     contracts = crane_filter(vessel, contracts, port_data)
     print(f'After Crane Filter: \t\t{contracts.shape[0]}')
 
+    # filters for cargos and deck dimensions
     contracts = dimension_filter(vessel, contracts, cargo_data)
-    print(f'After Dimension Filter: \t\t{contracts.shape[0]}')
+    print(f'After Dimension Filter: \t{contracts.shape[0]}')
 
     # contracts.to_csv('debug_filter.csv')
 
