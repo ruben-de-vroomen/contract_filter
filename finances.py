@@ -43,9 +43,9 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
         5. Ice breaker-costs, loading unloading costs...? #! Not relevant, filtered out
         6. Determine the break even going rate given the costs #* DONE
         7. How profitable? compare with given rate #* DONE
-        8. Sort on profitability (largest difference posted rate and break even rate?) #* Done
+        8. Sort on profitability (largest difference posted rate and break even rate?) #* DONE
         9. Fix Currency Issue #! Critical Issue
-        10. SSHIC Not implemented #*TODO
+        10. SSHIC Not implemented #*DONE
     '''
 
 
