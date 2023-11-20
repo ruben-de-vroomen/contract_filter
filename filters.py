@@ -3,7 +3,6 @@ import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
 
 def weight_filter(vessel: MyShip, contracts):
-    cargo_weight = contracts['Weight']
 
     contracts_filter = contracts.loc[contracts['Weight'] < vessel.get('max_DWT')]
 
@@ -94,16 +93,17 @@ def crane_filter(vessel: MyShip, contracts, port_data):
 
 
 # todo fix these filters
-def width_filter(vessel: MyShip, cargo_data):
-    cargo_width = cargo_data['Cargo Width']
+def dimension_filter(vessel: MyShip, contracts, cargo_data):
+    cargo_width_dict = pd.Series(cargo_data['Cargo Width'].values,index=cargo_data['Cargo Type']).to_dict()
+    cargo_length_dict = pd.Series(cargo_data['Cargo Length'].values,index=cargo_data['Cargo Type']).to_dict()
+    cargo_deck_filter = pd.Series(cargo_data['Transport on Deck'].values,index=cargo_data['Cargo Type']).to_dict()
 
-    contracts_filter = cargo_data.loc[cargo_data['Cargo Width'] <= 0.75*vessel.get('Width')] #? klopt dit, is dit niet hatch width?
+    contracts['Deck'] = contracts['Cargo'].map(cargo_deck_filter)
+    contracts['Cargo Length'] = contracts['Cargo'].map(cargo_length_dict)
+    contracts['Cargo Width'] = contracts['Cargo'].map(cargo_width_dict)
+
+    contracts = contracts.loc[((contracts['Deck'] == True) & (vessel.get('width')*0.75 > contracts['Cargo Width']) & (vessel.get('length')*0.75 > contracts['Cargo Length'])) | (contracts['Deck'] == False)]
+
+    # print(contracts)
     
-    return contracts_filter 
-
-def Length_filter(vessel: MyShip, cargo_data): # deze is volgens mij overbodig
-    cargo_length = cargo_data['Cargo Length']
-
-    contracts_filter = cargo_data.loc[cargo_data['Cargo Length'] <= 0.75*vessel.get('Length')] #! pas op, hier staat nog vessel width
-    
-    return contracts_filter 
+    return contracts

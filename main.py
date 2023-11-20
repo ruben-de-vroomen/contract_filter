@@ -66,6 +66,9 @@ def main():
     contracts = crane_filter(vessel, contracts, port_data)
     print(f'After Crane Filter: \t\t{contracts.shape[0]}')
 
+    contracts = dimension_filter(vessel, contracts, cargo_data)
+    print(f'After Dimension Filter: \t\t{contracts.shape[0]}')
+
     # contracts.to_csv('debug_filter.csv')
 
     #* Now we begin with some finances:
