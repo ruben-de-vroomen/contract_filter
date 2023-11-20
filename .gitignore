@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+variable/week*
+
 # Distribution / packaging
 .Python
 build/

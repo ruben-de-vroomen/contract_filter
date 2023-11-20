@@ -31,11 +31,18 @@ def main():
 
     my_loans = [(500_000, 0.091),(100_000, 0.051),] # <- your loans here
 
+    variable_data = 'variable/week1'
+
     #! importing fixed data and contracts
-    port_data = pd.read_csv('fixed_data/port_data.csv', delimiter=';')
+    port_data = pd.read_csv(f'{variable_data}/Port Data.csv', delimiter=';')
     distances = pd.read_csv('fixed_data/distances.csv', delimiter=';')
     cargo_data = pd.read_csv('fixed_data/cargo_data.csv', delimiter=';')
-    contracts = pd.read_csv('contracts.csv', delimiter=';')
+    
+    voyage_charters = pd.read_csv(f'{variable_data}/Voyage Charters.csv', delimiter=';')
+    # time_charters = pd.read_csv(f'{variable_data}/Time Charters.csv', delimiter=';')
+    # coa_charters = pd.read_csv(f'{variable_data}/Contracts Of Affreightment.csv', delimiter=';')
+
+    contracts = voyage_charters
 
     print(f'Total Number of Contracts: \t{contracts.shape[0]}')
 
@@ -65,11 +72,11 @@ def main():
 
     contracts = contracts.sort_values('Profit', ascending=False)
 
-    concat = contracts[['Type', 'Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time']]
+    concat = contracts[['Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time']]
 
     concat.to_csv('output.csv')
 
-    print(concat.columns)
+    # print(concat.columns)
 
 if __name__ == "__main__":
     main()
