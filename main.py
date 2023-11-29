@@ -4,18 +4,14 @@ from ship import MyShip
 from filters import *
 from finances import financials
 
-
-
-def main():
-    #! defining your vessel here
-    vessel = MyShip(length=229.75, 
+handymax33 = MyShip(length=229.75, 
                     width=32.21, 
                     draft_full=12.6, 
                     draft_empty=3.28, 
                     plate_strength=20, 
                     max_DWT = 66_758, 
                     max_volume=46_417, 
-                    OPEX = 1_986_762, 
+                    OPEX = 1_874_828, 
                     design_speed = 14, 
                     bunker_level=1400, 
                     ice_class=True,            # must be True or False
@@ -23,15 +19,19 @@ def main():
                     AIS_cost=100,               # either 0 or 100
                     consumption = 39.7,
                     consumption_hotel = 2.5,
-                    bunker_value=300,            # needs to be updated continually
+                    bunker_value=269,            # needs to be updated continually
                     GT = 28_905,
                     holds=7,
                     )
 
+def main():
+    #! defining your vessel here
+    vessel = handymax33
+
 
     my_loans = [] # <- your loans here [(200_000, 0.091), etc...]
 
-    variable_data = 'week1'
+    variable_data = 'week48'
 
     #! importing fixed data and contracts
     port_data = pd.read_csv(f'variable/{variable_data}/Port Data.csv', delimiter=';')
@@ -82,9 +82,9 @@ def main():
 
     contracts = contracts.sort_values('Profit', ascending=False)
 
-    concat = contracts[['Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage']]
+    concat = contracts[['Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft']]
 
-    concat.to_csv('output.csv')
+    concat.to_csv(f'variable/{variable_data}/output.csv')
 
     # print(concat.columns)
 
