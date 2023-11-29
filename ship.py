@@ -1,7 +1,12 @@
-import math as mt
+import pandas as pd
 
 class MyShip:
-    def __init__(self,length, width, draft_full, draft_empty, plate_strength, max_DWT, max_volume, OPEX, design_speed, bunker_level, ice_class, crane_capacity, AIS_cost, consumption, consumption_hotel, bunker_value, GT, holds):
+    def __init__(self, name:str) -> None:
+        #just some random default constructor
+        self.name = name
+
+
+    def from_data(self,length, width, draft_full, draft_empty, plate_strength, max_DWT, max_volume, OPEX, design_speed, bunker_level, ice_class, crane_capacity, AIS_cost, consumption, consumption_hotel, bunker_value, GT, holds):
         self.length = length
         self.width = width
         self.draft_max = draft_full
@@ -20,6 +25,13 @@ class MyShip:
         self.bunker_value = bunker_value
         self.GT = GT,
         self.holds = holds
+    
+
+    def from_name(self, name:str) -> None:
+        self.name = name
+        database = pd.read_csv('fixed_data/Vessels For Sale.csv')
+        print(database)
+
 
     def get(self, param: str):
         param_dict = {
@@ -43,6 +55,5 @@ class MyShip:
             'holds' : self.holds,
         }
         return param_dict[param]
-
 
 

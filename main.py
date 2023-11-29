@@ -5,7 +5,10 @@ from filters import *
 from finances import financials
 import pathlib
 
-handymax33 = MyShip(length=229.75, 
+handymax33 = MyShip('Handymax 33')
+handymax32 = MyShip('Handymax 32')
+
+handymax33.from_data(length=229.75, 
                     width=32.21, 
                     draft_full=12.6, 
                     draft_empty=3.28, 
@@ -24,6 +27,8 @@ handymax33 = MyShip(length=229.75,
                     GT = 28_905,
                     holds=7,
                     )
+
+handymax32.from_name(name='Handymax 32')
 
 def main():
     #! defining your vessel here
