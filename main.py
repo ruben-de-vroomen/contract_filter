@@ -35,7 +35,7 @@ handymax32.from_name(name='Handymax 32')
 
 def main():
     #! defining your vessel here
-    handymax32.update(bunker_value=270, bunker_level=1000)
+    handymax32.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000)
     vessel = handymax32
     week_no = 48
 

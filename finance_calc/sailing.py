@@ -88,7 +88,7 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
 
     
     contracts['Minimum Speed'] = contracts['Voyage Distance'] / (contracts['Duration']*7*24 - contracts['Load-Sail Time']) 
-    
+    contracts['Contract Time'] = contracts['Non-Sailing Time'] + contracts['Sailing Duration']
 
     contracts['Fuel Costs'] = contracts['Bunker Usage'] * vessel.get('bunker_value')
     return contracts

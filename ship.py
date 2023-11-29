@@ -66,9 +66,10 @@ class MyShip:
         self.holds = int(vessel['Holds'].values[0])
 
 
-    def update(self, bunker_value, bunker_level) -> None:
+    def update(self, bunker_value, bunker_level, OPEX) -> None:
         self.bunker_level = bunker_level
         self.bunker_value = bunker_value
+        self.OPEX = OPEX
 
 
     def get(self, param: str):
