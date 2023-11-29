@@ -4,9 +4,9 @@ pd.options.mode.chained_assignment = None  # default='warn'
 
 def weight_filter(vessel: MyShip, contracts):
 
-    contracts_filter = contracts.loc[contracts['Weight'] < vessel.get('max_DWT')]
+    contracts.loc[contracts['Weight'] > (vessel.get('max_DWT') - vessel.get('bunker_level'))*1.1, 'Allowed'] = 'Weight'
 
-    return contracts_filter 
+    return contracts
 
 
 def volume_filter(vessel: MyShip, contracts, cargo_data):

@@ -63,6 +63,8 @@ def main():
 
     contracts = voyage_charters.copy()
 
+    contracts['Allowed'] = 'True'
+
     print(f'Total Number of Contracts: \t{contracts.shape[0]}')
 
     # Filters
@@ -101,7 +103,7 @@ def main():
 
     contracts = contracts.sort_values('Profit', ascending=False)
 
-    concat = contracts[['Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft']]
+    concat = contracts[['Allowed','Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft']]
 
     concat.to_csv(f'variable/{variable_data}/output.csv')
 
