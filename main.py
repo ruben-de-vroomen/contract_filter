@@ -3,6 +3,7 @@ import numpy as numpy
 from ship import MyShip
 from filters import *
 from finances import financials
+import pathlib
 
 handymax33 = MyShip(length=229.75, 
                     width=32.21, 
@@ -13,9 +14,9 @@ handymax33 = MyShip(length=229.75,
                     max_volume=46_417, 
                     OPEX = 1_874_828, 
                     design_speed = 14, 
-                    bunker_level=1400, 
-                    ice_class=True,            # must be True or False
-                    crane_capacity=25,           # either 0 or 25
+                    bunker_level=1400,          # Adjust every round 
+                    ice_class=True,             # must be True or False
+                    crane_capacity=25,          # either 0 or 25
                     AIS_cost=100,               # either 0 or 100
                     consumption = 39.7,
                     consumption_hotel = 2.5,
@@ -27,13 +28,22 @@ handymax33 = MyShip(length=229.75,
 def main():
     #! defining your vessel here
     vessel = handymax33
+    week_no = 48
+
+    my_loans = [] # <- your loans here [(200_000, 0.091),(Value, Rate), etc...]
+
+    
+    #! VV DONT TOUCH SHIT DOWN HERE VV
+
+    # creatig the week folders
+    variable_data = f'week{week_no}'
+    variable_next = f'week{week_no + 1}'
+
+    
+    pathlib.Path(f'variable/{variable_next}').mkdir(parents=True, exist_ok=True) 
 
 
-    my_loans = [] # <- your loans here [(200_000, 0.091), etc...]
-
-    variable_data = 'week48'
-
-    #! importing fixed data and contracts
+    # importing fixed data and contracts
     port_data = pd.read_csv(f'variable/{variable_data}/Port Data.csv', delimiter=';')
     distances = pd.read_csv('fixed_data/distances.csv', delimiter=';')
     cargo_data = pd.read_csv('fixed_data/cargo_data.csv', delimiter=';')
@@ -46,7 +56,7 @@ def main():
 
     print(f'Total Number of Contracts: \t{contracts.shape[0]}')
 
-    #! Filters
+    # Filters
     # weight filter
     contracts = weight_filter(vessel, contracts)
     print(f'After Weight Filter: \t\t{contracts.shape[0]}')
