@@ -37,7 +37,7 @@ def main():
     #! defining your vessel here
     handymax32.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000)
     vessel = handymax32
-    week_no = 48
+    week_no = 2
 
     my_loans = [] # <- your loans here [(200_000, 0.091),(Value, Rate), etc...]
 
@@ -63,7 +63,7 @@ def main():
 
     contracts = voyage_charters.copy()
 
-    contracts['Allowed'] = 'True'
+    contracts['Allowed'] = ''
 
     print(f'Total Number of Contracts: \t{contracts.shape[0]}')
 
