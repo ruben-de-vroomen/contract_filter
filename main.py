@@ -5,6 +5,7 @@ from filters import *
 from finances import financials
 import pathlib
 
+#initialise here
 handymax33 = MyShip('Handymax 33')
 handymax32 = MyShip('Handymax 32')
 
@@ -30,9 +31,11 @@ handymax33.from_data(length=229.75,
 
 handymax32.from_name(name='Handymax 32')
 
+handymax32.update(bunker_value=270, bunker_level=1000)
+
 def main():
     #! defining your vessel here
-    vessel = handymax33
+    vessel = handymax32
     week_no = 48
 
     my_loans = [] # <- your loans here [(200_000, 0.091),(Value, Rate), etc...]

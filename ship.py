@@ -29,8 +29,46 @@ class MyShip:
 
     def from_name(self, name:str) -> None:
         self.name = name
-        database = pd.read_csv('fixed_data/Vessels For Sale.csv')
-        print(database)
+        ship_database = pd.read_csv('fixed_data/Vessels For Sale.csv',delimiter=';')
+
+        vessel = ship_database.loc[ship_database['Name'] == name]
+
+        if vessel.empty:
+            raise Exception("The ship name you entered is not in the database!")
+        print(f"selected vessel {vessel['Name'].to_string(index=False, header=False)}")
+
+        self.length = float(vessel['Length'].values[0])
+        self.width = float(vessel['Width'].values[0])
+        self.draft_max = float(vessel['Draft'].values[0])
+        self.draft_min = float(vessel['Draft Empty'].values[0])
+        self.plate_strength = int(vessel['Floor Strength'].values[0])
+        self.max_DWT = float(vessel['DWT'].values[0])
+        self.max_vol = float(vessel['Cargo Volume'].values[0])
+        self.OPEX = float(vessel['Total OPEX'].values[0])
+        self.design_speed = float(vessel['Speed'].values[0])
+        self.bunker_level = float(vessel['Bunker Capacity'].values[0])
+        
+        if vessel['Ice Class'].values[0] == 'FALSE':
+            self.ice_class = False
+        else:
+            self.ice_class = True
+
+        if int(vessel['Cranes'].values[0]) > 0:
+            self.crane = 25
+        else:
+            self.crane = 0
+        
+        self.AIS = 100 #assumption
+        self.consumption = float(vessel['Consumption'].values[0])
+        self.consumption_hotel = float(vessel['Hotel Consumption'].values[0])
+        self.bunker_value = 300 # assumption
+        self.GT = float(vessel['GT'].values[0])
+        self.holds = int(vessel['Holds'].values[0])
+
+
+    def update(self, bunker_value, bunker_level) -> None:
+        self.bunker_level = bunker_level
+        self.bunker_value = bunker_value
 
 
     def get(self, param: str):
