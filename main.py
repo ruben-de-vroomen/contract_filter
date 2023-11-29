@@ -31,10 +31,11 @@ handymax33.from_data(length=229.75,
 
 handymax32.from_name(name='Handymax 32')
 
-handymax32.update(bunker_value=270, bunker_level=1000)
+
 
 def main():
     #! defining your vessel here
+    handymax32.update(bunker_value=270, bunker_level=1000)
     vessel = handymax32
     week_no = 48
 

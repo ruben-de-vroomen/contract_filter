@@ -23,20 +23,6 @@ def canal_check(vessel: MyShip, single_contract):
 
     return suez_check, panama_check
 
-# def optimize_hourly(x, vessel: MyShip, single_contract, OPEX):
-
-#     adjusted_consumption = (((vessel.get('consumption')/24)*(x / vessel.get('design_speed'))**3 * (single_contract['Actual Draft'] / vessel.get('draft_max'))**(2/3)))[0]
-
-#     fuel_cost = adjusted_consumption * vessel.get('bunker_value') #* (single_contract['Voyage Distance'] / x)
-
-#     OPEX_hour = OPEX / (7 * 24) + vessel.get('hotel') / 24 * vessel.get('bunker_value')
-
-
-#     single_contract['Sailing Duration'] = single_contract['Voyage Distance'] / x + single_contract['Non-Sailing Time']
-
-#     loss_hour = -(single_contract['Total Value'] / single_contract['Sailing Duration']) + OPEX_hour + fuel_cost
-
-#     return loss_hour
 
 def consumption(x, vessel, single_contract):
     adjusted_consumption = (((vessel.get('consumption')/24)*(x / vessel.get('design_speed'))**3 * (single_contract['Actual Draft'] / vessel.get('draft_max'))**(2/3)))
@@ -101,7 +87,7 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
         contracts.at[idx, 'Bunker Usage'] = consumption(speed_optimal, vessel, single_contract) * single_contract['Sailing Duration']
 
     
-    contracts['Minimum Speed'] = contracts['Voyage Distance'] / (contracts['Duration']*7*24 - contracts['Non-Sailing Time']) 
+    contracts['Minimum Speed'] = contracts['Voyage Distance'] / (contracts['Duration']*7*24 - contracts['Load-Sail Time']) 
     
 
     contracts['Fuel Costs'] = contracts['Bunker Usage'] * vessel.get('bunker_value')
