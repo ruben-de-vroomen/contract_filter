@@ -75,7 +75,7 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
     contracts['Minimum Speed'] = 0
     
 
-    contracts['Total Value'] = contracts['Rate'] * contracts['Weight'] * (1 - contracts['Signing Fee'])
+    contracts['Total Value'] = contracts['Rate'] * contracts['Weight'] * (1 - contracts['Commission'])
 
     bnds = [(1.0, vessel.get('design_speed'))]
 
