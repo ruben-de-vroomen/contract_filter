@@ -101,7 +101,7 @@ def main():
     #* Now we begin with some finances:
     contracts = financials(vessel, contracts, port_data, distances, my_loans)
 
-    contracts = contracts.sort_values('Profit', ascending=False)
+    contracts = contracts.sort_values(['Allowed','Profit'], ascending=[True, False])
 
     concat = contracts[['Allowed','Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft']]
 
