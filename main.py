@@ -38,10 +38,8 @@ def main():
     week_no = 38
 
     my_loans = [] # <- your loans here [(200_000, 0.091),(Value, Rate), etc...]
-    ships = [handymax33]
-    
+    ships = [handymax32, handymax33]
 
-    print(handymax33.get('GT'))
     
     for ship in ships:
         runner(ship, week_no, my_loans, testing_mode=False)

@@ -73,8 +73,6 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
 
         if port_distances['Canal'].eq('No').any() == True:
             # print(f"{port_distances['Canal']}")
-            print(vessel.get('GT'))
-            print(port_distances['Canal Fee'].values[0])
             contracts.at[idx, 'Canal Costs'] = port_distances['Canal Fee'].values[0] * vessel.get('GT')
             contracts.at[idx, 'Voyage Distance'] = port_distances['Distance Not Using Canal'].values[0]
 
