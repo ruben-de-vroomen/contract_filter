@@ -3,8 +3,13 @@ import numpy as numpy
 from ship import MyShip
 from filters import *
 from finances import financials
+import pathlib
 
-handymax33 = MyShip(length=229.75, 
+#initialise here
+handymax33 = MyShip('Handymax 33')
+handymax32 = MyShip('Handymax 32')
+
+handymax33.from_data(length=229.75, 
                     width=32.21, 
                     draft_full=12.6, 
                     draft_empty=3.28, 
@@ -13,9 +18,9 @@ handymax33 = MyShip(length=229.75,
                     max_volume=46_417, 
                     OPEX = 1_874_828, 
                     design_speed = 14, 
-                    bunker_level=1400, 
-                    ice_class=True,            # must be True or False
-                    crane_capacity=25,           # either 0 or 25
+                    bunker_level=1400,          # Adjust every round 
+                    ice_class=True,             # must be True or False
+                    crane_capacity=25,          # either 0 or 25
                     AIS_cost=100,               # either 0 or 100
                     consumption = 39.7,
                     consumption_hotel = 2.5,
@@ -24,16 +29,30 @@ handymax33 = MyShip(length=229.75,
                     holds=7,
                     )
 
+handymax32.from_name(name='Handymax 32')
+
+
+
 def main():
     #! defining your vessel here
-    vessel = handymax33
+    handymax32.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000)
+    vessel = handymax32
+    week_no = 2
+
+    my_loans = [] # <- your loans here [(200_000, 0.091),(Value, Rate), etc...]
+
+    
+    #! VV DONT TOUCH SHIT DOWN HERE VV
+
+    # creatig the week folders
+    variable_data = f'week{week_no}'
+    variable_next = f'week{week_no + 1}'
+
+    
+    pathlib.Path(f'variable/{variable_next}').mkdir(parents=True, exist_ok=True) 
 
 
-    my_loans = [] # <- your loans here [(200_000, 0.091), etc...]
-
-    variable_data = 'week48'
-
-    #! importing fixed data and contracts
+    # importing fixed data and contracts
     port_data = pd.read_csv(f'variable/{variable_data}/Port Data.csv', delimiter=';')
     distances = pd.read_csv('fixed_data/distances.csv', delimiter=';')
     cargo_data = pd.read_csv('fixed_data/cargo_data.csv', delimiter=';')
@@ -44,9 +63,11 @@ def main():
 
     contracts = voyage_charters.copy()
 
+    contracts['Allowed'] = ''
+
     print(f'Total Number of Contracts: \t{contracts.shape[0]}')
 
-    #! Filters
+    # Filters
     # weight filter
     contracts = weight_filter(vessel, contracts)
     print(f'After Weight Filter: \t\t{contracts.shape[0]}')
@@ -80,9 +101,9 @@ def main():
     #* Now we begin with some finances:
     contracts = financials(vessel, contracts, port_data, distances, my_loans)
 
-    contracts = contracts.sort_values('Profit', ascending=False)
+    contracts = contracts.sort_values(['Allowed','Profit'], ascending=[True, False])
 
-    concat = contracts[['Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft']]
+    concat = contracts[['Allowed','Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft']]
 
     concat.to_csv(f'variable/{variable_data}/output.csv')
 

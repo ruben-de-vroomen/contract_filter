@@ -4,9 +4,9 @@ pd.options.mode.chained_assignment = None  # default='warn'
 
 def weight_filter(vessel: MyShip, contracts):
 
-    contracts_filter = contracts.loc[contracts['Weight'] < vessel.get('max_DWT')]
+    contracts.loc[contracts['Weight'] > (vessel.get('max_DWT') - vessel.get('bunker_level'))*1.1, 'Allowed'] += 'Weight : '
 
-    return contracts_filter 
+    return contracts
 
 
 def volume_filter(vessel: MyShip, contracts, cargo_data):
@@ -18,9 +18,9 @@ def volume_filter(vessel: MyShip, contracts, cargo_data):
     #todo: check the units of density tonnes/m^3 assumed now, also weight in tonnes
     contracts['Volume'] = contracts['Weight'] / contracts['Density']
 
-    contracts_filter = contracts.loc[contracts['Volume'] < vessel.get('max_vol')]
+    contracts.loc[contracts['Volume'] > vessel.get('max_vol'), 'Allowed'] += 'Volume : '
 
-    return  contracts_filter
+    return  contracts
 
 def deck_strength_filter(vessel: MyShip, contracts, cargo_data):
     cargo_dict = pd.Series(cargo_data['Minimum Floor Strength'].values,index=cargo_data['Cargo Type']).to_dict()
@@ -28,13 +28,12 @@ def deck_strength_filter(vessel: MyShip, contracts, cargo_data):
 
     # print(contracts['Floor Strength'])
 
-    contracts_filter = contracts.loc[contracts['Floor Strength'] <= vessel.get('plate_strength')]
+    contracts.loc[contracts['Floor Strength'] > vessel.get('plate_strength'), 'Allowed'] += 'Floor Strength : '
 
-    return contracts_filter
+    return contracts
 
 def draft_filter(vessel: MyShip, contracts, port_data):
 
-    #todo: check bunker level is in tonnes
     #todo: check that this is true
     contracts['Total DWT'] = contracts['Weight'] + vessel.get('bunker_level')
 
@@ -51,10 +50,10 @@ def draft_filter(vessel: MyShip, contracts, port_data):
     contracts['Departure Limit'] = contracts['Start Port'].map(port_dict)
     contracts['Arrival Limit'] = contracts['Destination'].map(port_dict)
 
-    contracts = contracts.loc[contracts['Actual Draft'] < contracts['Departure Limit']]
-    contracts_filter = contracts.loc[contracts['Actual Draft'] < contracts['Arrival Limit']]
+    contracts.loc[contracts['Actual Draft'] >= contracts['Departure Limit'], 'Allowed'] += 'Depart Draft : '
+    contracts.loc[contracts['Actual Draft'] >= contracts['Arrival Limit'], 'Allowed'] += 'Destin Draft : '
 
-    return contracts_filter
+    return contracts
 
 
 
@@ -68,10 +67,10 @@ def ice_class_filter(vessel: MyShip, contracts, port_data):
     contracts['Departure Ice'] = contracts['Start Port'].map(port_dict)
     contracts['Arrival Ice'] = contracts['Destination'].map(port_dict)
 
-    contracts = contracts.loc[contracts['Departure Ice'] == False]
-    contracts_filter = contracts.loc[contracts['Arrival Ice'] == False]
+    contracts.loc[contracts['Departure Ice'] == True, 'Allowed'] += 'ICE : '
+    contracts.loc[contracts['Arrival Ice'] == True, 'Allowed'] += 'ICE : '
 
-    return contracts_filter
+    return contracts
 
 
 def crane_filter(vessel: MyShip, contracts, port_data):
@@ -87,11 +86,11 @@ def crane_filter(vessel: MyShip, contracts, port_data):
     if vessel.get('crane_capacity') > 0:
         return contracts
     else:
-        contracts = contracts.loc[contracts['Loading Rate'] > 1]
-        contracts_filter = contracts.loc[contracts['Unloading Rate'] > 1]
+        contracts.loc[contracts['Loading Rate'] < 1, 'Allowed'] += 'Depart Crane : '
+        contracts.loc[contracts['Unloading Rate'] < 1, 'Allowed'] += 'Destin Crane : '
 
 
-    return contracts_filter
+    return contracts
 
 
 # todo fix these filters
@@ -104,7 +103,7 @@ def dimension_filter(vessel: MyShip, contracts, cargo_data):
     contracts['Cargo Length'] = contracts['Cargo'].map(cargo_length_dict)
     contracts['Cargo Width'] = contracts['Cargo'].map(cargo_width_dict)
 
-    contracts = contracts.loc[((contracts['Deck'] == True) & (vessel.get('width')*0.75 > contracts['Cargo Width']) & (vessel.get('length')*0.75 > contracts['Cargo Length'])) | (contracts['Deck'] == False)]
+    contracts.loc[~(((contracts['Deck'] == True) & (vessel.get('width')*0.75 > contracts['Cargo Width']) & (vessel.get('length')*0.75 > contracts['Cargo Length'])) | (contracts['Deck'] == False)), 'Allowed'] += 'Cargo Dim : '
 
     # print(contracts)
     
