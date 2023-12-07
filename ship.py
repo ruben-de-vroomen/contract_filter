@@ -35,7 +35,7 @@ class MyShip:
 
         if vessel.empty:
             raise Exception("The ship name you entered is not in the database!")
-        print(f"selected vessel {vessel['Name'].to_string(index=False, header=False)}")
+        print(f"importing vessel {vessel['Name'].to_string(index=False, header=False)} \n")
 
         self.length = float(vessel['Length'].values[0])
         self.width = float(vessel['Width'].values[0])
@@ -92,6 +92,7 @@ class MyShip:
             'bunker_value': self.bunker_value,
             'GT' : self.GT,
             'holds' : self.holds,
+            'name' : self.name,
         }
         return param_dict[param]
 
