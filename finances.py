@@ -3,7 +3,7 @@ import pandas as pd
 from finance_calc.durations import duration
 from finance_calc.sailing import sailing_speed
 from finance_calc.port_fee import port_fee
-
+from finance_calc.demurage import demurage
 
 def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     
@@ -22,13 +22,14 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts = duration(vessel, contracts, port_data)
     contracts = sailing_speed(vessel, contracts, port_distances, fixed_costs)
     contracts = port_fee(vessel, contracts, port_data)
+    contracts = demurage(vessel, contracts)
 
     #TODO Check total cost assumption
     contracts['Fixed Costs'] = (fixed_costs / (7*24)) * contracts['Contract Time']
     contracts['Total Cost'] = contracts['Fuel Costs'] + contracts['Port Costs'] + contracts['Canal Costs'] + contracts['Fixed Costs']
 
     contracts['Break Even Rate'] = contracts['Total Cost'] / contracts['Weight']
-    contracts['Profit'] = contracts['Total Value'] - contracts['Total Cost']
+    contracts['Profit'] = contracts['Total Value'] + contracts['Predicted Demurage'] - contracts['Total Cost']
     
 
 

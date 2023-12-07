@@ -36,8 +36,8 @@ handymax32.from_name(name='Handymax 32')
 def main():
     #! defining your vessel here
     handymax32.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000)
-    vessel = handymax32
-    week_no = 2
+    vessel = handymax33
+    week_no = 38
 
     my_loans = [] # <- your loans here [(200_000, 0.091),(Value, Rate), etc...]
 
@@ -103,7 +103,7 @@ def main():
 
     contracts = contracts.sort_values(['Allowed','Profit'], ascending=[True, False])
 
-    concat = contracts[['Allowed','Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft']]
+    concat = contracts[['Allowed','Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo','Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Port Hours','Predicted Demurage','Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft']]
 
     concat.to_csv(f'variable/{variable_data}/output.csv')
 
