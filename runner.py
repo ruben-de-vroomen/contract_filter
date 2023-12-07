@@ -7,7 +7,7 @@ import pathlib
 
 
 
-def runner(vessel: MyShip, week_no, my_loans):
+def runner(vessel: MyShip, week_no, my_loans, testing_mode=False):
 
     #! VV DONT TOUCH SHIT DOWN HERE VV
     print(f"working on vessel :\t\t{vessel.get('name')}")
@@ -25,8 +25,16 @@ def runner(vessel: MyShip, week_no, my_loans):
     port_data = pd.read_csv(f'variable/{variable_data}/Port Data.csv', delimiter=';')
     distances = pd.read_csv('fixed_data/distances.csv', delimiter=';')
     cargo_data = pd.read_csv('fixed_data/cargo_data.csv', delimiter=';')
-    
-    voyage_charters = pd.read_csv(f'variable/{variable_data}/Voyage Charters.csv', delimiter=';')
+
+
+    if testing_mode == True:
+        charters = pd.read_csv(f'fixed_data/charters.csv', delimiter=';')
+        voyage_charters = charters.loc[charters['Type'] == 'Voyage Charter']
+        voyage_charters = voyage_charters.drop(columns=['Type'])
+    else:
+        voyage_charters = pd.read_csv(f'variable/{variable_data}/Voyage Charters.csv', delimiter=';')
+
+
     # time_charters = pd.read_csv(f'{variable_data}/Time Charters.csv', delimiter=';')
     # coa_charters = pd.read_csv(f'{variable_data}/Contracts Of Affreightment.csv', delimiter=';')
 

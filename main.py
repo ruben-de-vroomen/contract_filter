@@ -41,7 +41,7 @@ def main():
     ships = [handymax32, handymax33]
     
     for ship in ships:
-        runner(ship, week_no, my_loans)
+        runner(ship, week_no, my_loans, testing_mode=True)
 
 
     print('exit 0')
