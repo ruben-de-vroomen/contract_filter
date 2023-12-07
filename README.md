@@ -13,6 +13,7 @@ Filters Contracts for Finance Game
 3. Various Bug Fixes in Break Even Rate and Sailing Speeds
 4. Demurage now also calculated for each journey, and is subtracted from the break even rate to reflect its new position
 5. Contracts are now not entirely excluded, but labeled as not possible with a reason why
+6. Multiple vessels now can be run at the same time...
 
 ## WARNINGS
 
