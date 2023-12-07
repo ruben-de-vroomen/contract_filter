@@ -23,7 +23,7 @@ class MyShip:
         self.consumption = consumption
         self.consumption_hotel = consumption_hotel
         self.bunker_value = bunker_value
-        self.GT = GT,
+        self.GT = GT
         self.holds = holds
     
 

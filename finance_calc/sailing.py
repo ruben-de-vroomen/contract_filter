@@ -51,8 +51,8 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
     contracts['Sailing Duration'] = 0 
 
     
-    panama_counter = 0
-    suez_counter = 0
+    # panama_counter = 0
+    # suez_counter = 0
 
     for idx, single_contract in contracts.iterrows():
         port_distances = distances
@@ -73,6 +73,8 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
 
         if port_distances['Canal'].eq('No').any() == True:
             # print(f"{port_distances['Canal']}")
+            print(vessel.get('GT'))
+            print(port_distances['Canal Fee'].values[0])
             contracts.at[idx, 'Canal Costs'] = port_distances['Canal Fee'].values[0] * vessel.get('GT')
             contracts.at[idx, 'Voyage Distance'] = port_distances['Distance Not Using Canal'].values[0]
 
@@ -81,8 +83,8 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
             contracts.at[idx, 'Voyage Distance'] = port_distances['Distance Using Canal'].values[0]
 
         elif port_distances['Canal'].eq('Suez').any() == True and suez_check == False:
-            suez_counter += 1
-            print(single_contract['Actual Draft'])
+            # suez_counter += 1
+            # print(single_contract['Actual Draft'])
             contracts.at[idx, 'Canal Costs'] = port_distances['Canal Fee'].values[0] * vessel.get('GT')
             contracts.at[idx, 'Voyage Distance'] = port_distances['Distance Not Using Canal'].values[0]
 
@@ -91,7 +93,7 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
             contracts.at[idx, 'Voyage Distance'] = port_distances['Distance Using Canal'].values[0]
 
         elif port_distances['Canal'].eq('Panama').any() == True and panama_check == False:
-            panama_counter += 1
+            # panama_counter += 1
             contracts.at[idx, 'Canal Costs'] = port_distances['Canal Fee'].values[0] * vessel.get('GT')
             contracts.at[idx, 'Voyage Distance'] = port_distances['Distance Not Using Canal'].values[0]
         else:
@@ -99,7 +101,7 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
             exit(2)
         
     # print(suez_counter)
-    # print(panama_counter)
+    # print(panama_counter) #debug counters...
 
 
         #if port_distances.shape[0] > 1 and panama_check == True or suez_check == True:

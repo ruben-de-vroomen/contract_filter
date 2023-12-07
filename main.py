@@ -26,7 +26,7 @@ handymax33.from_data(length=229.75,
                     )
 
 handymax32.from_name(name='Handymax 32')
-
+# handymax33.from_name(name='Handymax 33')
 
 
 
@@ -38,10 +38,13 @@ def main():
     week_no = 38
 
     my_loans = [] # <- your loans here [(200_000, 0.091),(Value, Rate), etc...]
-    ships = [handymax32, handymax33]
+    ships = [handymax33]
+    
+
+    print(handymax33.get('GT'))
     
     for ship in ships:
-        runner(ship, week_no, my_loans, testing_mode=True)
+        runner(ship, week_no, my_loans, testing_mode=False)
 
 
     print('exit 0')
