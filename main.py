@@ -32,7 +32,9 @@ handymax32.from_name(name='Handymax 32')
 
 def main():
     #! defining your vessel here
-    handymax32.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000)
+    handymax32.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000, current_port='Corpus Christi')
+    handymax33.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000, current_port='Corpus Christi')
+    
     week_no = 38
 
     my_loans = [] # <- your loans here [(200_000, 0.091),(Value, Rate), etc...]
@@ -40,6 +42,9 @@ def main():
     
     for ship in ships:
         runner(ship, week_no, my_loans)
+
+
+    print('exit 0')
     
 
 if __name__ == "__main__":

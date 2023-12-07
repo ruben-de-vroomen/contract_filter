@@ -4,6 +4,7 @@ from finance_calc.durations import duration
 from finance_calc.sailing import sailing_speed
 from finance_calc.port_fee import port_fee
 from finance_calc.demurage import demurage
+from finance_calc.stint import stint
 
 def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     
@@ -23,6 +24,7 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts = sailing_speed(vessel, contracts, port_distances, fixed_costs)
     contracts = port_fee(vessel, contracts, port_data)
     contracts = demurage(vessel, contracts)
+    contracts = stint(vessel, contracts, port_data)
 
     #TODO Check total cost assumption
     contracts['Fixed Costs'] = (fixed_costs / (7*24)) * contracts['Contract Time']
@@ -31,6 +33,7 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts['Break Even Rate'] = (contracts['Total Cost'] - contracts['Predicted Demurage']) / contracts['Weight']
     contracts['Profit'] = contracts['Total Value'] + contracts['Predicted Demurage'] - contracts['Total Cost']
     
+
 
 
 
