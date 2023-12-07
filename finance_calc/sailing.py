@@ -5,17 +5,17 @@ import pandas as pd
 from ship import MyShip
 from scipy.optimize import minimize
 
-# todo finish this
+# info: this should return True if its possible...
 def canal_check(vessel: MyShip, single_contract):
     panama = [0, 32.53, 12.6] # [length, width, depth]
     suez = [0, 77.5, 20]
 
-    if vessel.get('width') > suez[1] and single_contract['Actual Draft'] < suez[2]:
+    if vessel.get('width') < suez[1] and single_contract['Actual Draft'] < suez[2]: #see these signs? is this a bug?
         suez_check = True
     else:
         suez_check = False
         
-    if vessel.get('width') > panama[1] and single_contract['Actual Draft'] < panama[2]:
+    if vessel.get('width') < panama[1] and single_contract['Actual Draft'] < panama[2]:
         panama_check = True
     else:
         panama_check = False

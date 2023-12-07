@@ -1,5 +1,6 @@
 import pandas as pd
 from ship import MyShip
+from finance_calc.sailing import consumption, canal_check
 
 
 def stint(vessel: MyShip, contracts, port_data):
@@ -10,4 +11,7 @@ def stint(vessel: MyShip, contracts, port_data):
         print('exiting with error code 1')
         exit(1)
 
+    
+
     return contracts
+
