@@ -28,7 +28,7 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts['Fixed Costs'] = (fixed_costs / (7*24)) * contracts['Contract Time']
     contracts['Total Cost'] = contracts['Fuel Costs'] + contracts['Port Costs'] + contracts['Canal Costs'] + contracts['Fixed Costs']
 
-    contracts['Break Even Rate'] = contracts['Total Cost'] / contracts['Weight']
+    contracts['Break Even Rate'] = (contracts['Total Cost'] - contracts['Predicted Demurage']) / contracts['Weight']
     contracts['Profit'] = contracts['Total Value'] + contracts['Predicted Demurage'] - contracts['Total Cost']
     
 
