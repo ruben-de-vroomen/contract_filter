@@ -24,7 +24,7 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts = sailing_speed(vessel, contracts, port_distances, fixed_costs)
     contracts = port_fee(vessel, contracts, port_data)
     contracts = demurage(vessel, contracts)
-    contracts = stint(vessel, contracts, port_data)
+    contracts = stint(vessel, contracts, port_data, port_distances)
 
     #TODO Check total cost assumption
     contracts['Fixed Costs'] = (fixed_costs / (7*24)) * contracts['Contract Time']
@@ -34,7 +34,7 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts['Profit'] = contracts['Total Value'] + contracts['Predicted Demurage'] - contracts['Total Cost']
     
 
-
+    contracts['Layover Costs'] = contracts['Layover Canal Costs'] + contracts['Layover Port Costs'] + ((fixed_costs / (7*24)) * contracts['Layover Time']) + contracts['Layover Fuel Costs']
 
 
     return contracts

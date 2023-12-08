@@ -7,7 +7,7 @@ import pathlib
 
 
 
-def runner(vessel: MyShip, week_no, my_loans, testing_mode=False):
+def runner(vessel: MyShip, week_no, my_loans, testing_mode=False, layover_start_week=0):
 
     #! VV DONT TOUCH SHIT DOWN HERE VV
     print(f"working on vessel :\t\t{vessel.get('name')}")
@@ -16,6 +16,11 @@ def runner(vessel: MyShip, week_no, my_loans, testing_mode=False):
     # creatig the week folders
     variable_data = f'week{week_no}'
     variable_next = f'week{week_no + 1}'
+
+    if layover_start_week == 0:
+        layover_start_week = week_no
+
+
 
     
     pathlib.Path(f'variable/{variable_next}').mkdir(parents=True, exist_ok=True) 
@@ -39,6 +44,8 @@ def runner(vessel: MyShip, week_no, my_loans, testing_mode=False):
     # coa_charters = pd.read_csv(f'{variable_data}/Contracts Of Affreightment.csv', delimiter=';')
 
     contracts = voyage_charters.copy()
+
+    contracts['Current Week'] = layover_start_week
 
     contracts['Allowed'] = ''
 

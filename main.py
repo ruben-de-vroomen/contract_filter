@@ -42,7 +42,7 @@ def main():
 
     
     for ship in ships:
-        runner(ship, week_no, my_loans, testing_mode=False)
+        runner(ship, week_no, my_loans, testing_mode=True, layover_start_week=0)
 
 
     print('exit 0')

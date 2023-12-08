@@ -12,7 +12,7 @@ def duration(vessel: MyShip, contracts, port_data):
     
     port_dict_waiting = pd.Series(port_data['Waiting Time'].values*24,index=port_data['Name']).to_dict()
     
-    contracts['Departure Wait Time'] = 0
+    contracts['Departure Wait Time'] = contracts['Start Port'].map(port_dict_waiting)
     contracts['Arrival Wait Time'] = contracts['Destination'].map(port_dict_waiting)
 
     # loading time
@@ -24,8 +24,8 @@ def duration(vessel: MyShip, contracts, port_data):
     contracts.loc[contracts['Unloading Rate'] >= vessel.get('crane_capacity'), 'Unloading Time'] = (contracts['Weight'] / (vessel.get('holds') *contracts['Unloading Rate']))/contracts['SSHINC Factor']
     contracts.loc[contracts['Unloading Rate'] < vessel.get('crane_capacity'), 'Unloading Time'] = (contracts['Weight'] / (vessel.get('holds') *vessel.get('crane_capacity')))/contracts['SSHINC Factor']
 
-    contracts['Non-Sailing Time'] = contracts['Arrival Wait Time'] + contracts['Departure Wait Time'] + contracts['Loading Time'] + contracts['Unloading Time']
-    contracts['Load-Sail Time'] = contracts['Arrival Wait Time'] + contracts['Departure Wait Time'] + contracts['Loading Time']
+    contracts['Non-Sailing Time'] = contracts['Arrival Wait Time']  + contracts['Loading Time'] + contracts['Unloading Time']
+    contracts['Load-Sail Time'] = contracts['Arrival Wait Time']  + contracts['Loading Time']
     
 
 

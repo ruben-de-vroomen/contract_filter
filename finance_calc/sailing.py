@@ -98,17 +98,6 @@ def sailing_speed(vessel: MyShip, contracts, distances, OPEX):
             print('failed at the canal check...')
             exit(2)
         
-    # print(suez_counter)
-    # print(panama_counter) #debug counters...
-
-
-        #if port_distances.shape[0] > 1 and panama_check == True or suez_check == True:
-        #    contracts.at[idx, 'Canal Costs'] = port_distances['Canal Fee'].values[0] * vessel.get('GT')
-        #    contracts.at[idx, 'Voyage Distance'] = min(port_distances.at[0,'Distance Using Canal'].values[0], port_distances.at[1,'Distance Using Canal'].values[0])
-        #    print(port_distances)
-            
-        #else:
-        #    contracts.at[idx, 'Voyage Distance'] = port_distances['Distance Not Using Canal']
 
     
     # voyage distance now found...
