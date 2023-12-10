@@ -85,7 +85,7 @@ def runner(vessel: MyShip, week_no, my_loans, testing_mode=False, layover_start_
 
     contracts = contracts.sort_values(['Allowed','Profit'], ascending=[True, False])
 
-    concat = contracts[['Allowed','Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo', 'Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Port Hours','Predicted Demurage','Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft', 'Layover Speed', 'Layover Costs', 'Layover Bunker Usage']]
+    concat = contracts[['Allowed','Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo', 'Weight', 'Currency','Rate', 'Break Even Rate', 'Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Port Hours','Predicted Demurage','Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft', 'Layover Speed', 'Layover Costs', 'Layover Bunker Usage','Layover Included Profit']]
 
     
     print(f"Available Contracts: \t\t{contracts[contracts['Allowed'] == ''].shape[0]}")
