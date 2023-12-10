@@ -23,7 +23,7 @@ class MyShip:
         self.consumption = consumption
         self.consumption_hotel = consumption_hotel
         self.bunker_value = bunker_value
-        self.GT = GT,
+        self.GT = GT
         self.holds = holds
     
 
@@ -66,10 +66,11 @@ class MyShip:
         self.holds = int(vessel['Holds'].values[0])
 
 
-    def update(self, bunker_value, bunker_level, OPEX) -> None:
+    def update(self, bunker_value, bunker_level, OPEX, current_port) -> None:
         self.bunker_level = bunker_level
         self.bunker_value = bunker_value
         self.OPEX = OPEX
+        self.current_port = current_port
 
 
     def get(self, param: str):
@@ -93,6 +94,7 @@ class MyShip:
             'GT' : self.GT,
             'holds' : self.holds,
             'name' : self.name,
+            'current_port' : self.current_port,
         }
         return param_dict[param]
 

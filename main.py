@@ -26,20 +26,26 @@ handymax33.from_data(length=229.75,
                     )
 
 handymax32.from_name(name='Handymax 32')
-
+# handymax33.from_name(name='Handymax 33')
 
 
 
 def main():
     #! defining your vessel here
-    handymax32.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000)
+    handymax32.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000, current_port='Corpus Christi')
+    handymax33.update(bunker_value=270, bunker_level=1000, OPEX=2_000_000, current_port='New York')
+    
     week_no = 38
 
     my_loans = [] # <- your loans here [(200_000, 0.091),(Value, Rate), etc...]
     ships = [handymax32, handymax33]
+
     
     for ship in ships:
-        runner(ship, week_no, my_loans)
+        runner(ship, week_no, my_loans, testing_mode=False, layover_start_week=0)
+
+
+    print('exit 0')
     
 
 if __name__ == "__main__":
