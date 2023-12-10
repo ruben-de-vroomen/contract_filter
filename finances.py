@@ -37,6 +37,6 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts['Layover Costs'] = contracts['Layover Canal Costs'] + contracts['Layover Port Costs'] + ((fixed_costs / (7*24)) * contracts['Layover Time']) + contracts['Layover Fuel Costs']
 
     contracts['Layover Included Profit'] = contracts['Total Value'] + contracts['Predicted Demurage'] - contracts['Total Cost'] - contracts['Layover Costs']
-
+    contracts['Layover Break Even'] = (contracts['Total Cost'] - contracts['Predicted Demurage'] + contracts['Layover Costs']) / contracts['Weight']
     return contracts
 
