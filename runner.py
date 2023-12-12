@@ -7,7 +7,7 @@ import pathlib
 
 
 
-def runner(vessel: MyShip, week_no, my_loans, testing_mode=False, layover_start_week=0):
+def runner(vessel: MyShip, week_no, my_loans, testing_mode=False):
 
     #! VV DONT TOUCH SHIT DOWN HERE VV
     print(f"working on vessel :\t\t{vessel.get('name')}")
@@ -17,8 +17,10 @@ def runner(vessel: MyShip, week_no, my_loans, testing_mode=False, layover_start_
     variable_data = f'week{week_no}'
     variable_next = f'week{week_no + 1}'
 
-    if layover_start_week == 0:
+    if vessel.get('layover_start_week') == 0:
         layover_start_week = week_no
+    else:
+        layover_start_week = vessel.get('layover_start_week')
 
 
 
@@ -48,7 +50,6 @@ def runner(vessel: MyShip, week_no, my_loans, testing_mode=False, layover_start_
     contracts['Current Week'] = layover_start_week
 
     contracts['Allowed'] = ''
-
     # Filters
     # weight filter
     contracts = weight_filter(vessel, contracts)
@@ -85,7 +86,7 @@ def runner(vessel: MyShip, week_no, my_loans, testing_mode=False, layover_start_
 
     contracts = contracts.sort_values(['Allowed','Layover Included Profit'], ascending=[True, False])
 
-    concat = contracts[['Allowed','Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo', 'Weight', 'Currency','Rate', 'Break Even Rate', 'Layover Break Even', 'Profit','Layover Included Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs', 'Port Hours','Predicted Demurage','Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft', 'Layover Speed', 'Layover Costs', 'Layover Bunker Usage']]
+    concat = contracts[['Allowed','Start Port', 'Start Week', 'Destination', 'Duration', 'Voyage Distance', 'Cargo', 'Weight', 'Currency','Rate', 'Break Even Rate', 'Layover Break Even', 'Profit','Layover Included Profit','Total Value', 'Total Cost', 'Port Costs', 'Fuel Costs', 'Fixed Costs', 'Canal Costs','Ice Fee', 'Layover Ice Costs', 'Port Hours','Predicted Demurage','Minimum Speed', 'Optimal Speed', 'Sailing Duration', 'Non-Sailing Time', 'Bunker Usage', 'Actual Draft', 'Layover Speed', 'Layover Costs', 'Layover Bunker Usage']]
 
     
     print(f"Available Contracts: \t\t{contracts[contracts['Allowed'] == ''].shape[0]}")
