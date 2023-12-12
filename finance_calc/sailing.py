@@ -28,6 +28,9 @@ def consumption(x, vessel, single_contract):
     adjusted_consumption = (((vessel.get('consumption')/24)*(x / vessel.get('design_speed'))**3 * (single_contract['Actual Draft'] / vessel.get('draft_max'))**(2/3)))
     return adjusted_consumption
 
+def consumption_empty(x, vessel, single_contract):
+    adjusted_consumption = (((vessel.get('consumption')/24)*(x / vessel.get('design_speed'))**3 * (vessel.get('draft_min') / vessel.get('draft_max'))**(2/3)))
+    return adjusted_consumption
 
 def optimize_total(x, vessel: MyShip, single_contract, OPEX):
     single_contract['Sailing Duration'] = single_contract['Voyage Distance'] / x

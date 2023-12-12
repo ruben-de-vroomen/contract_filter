@@ -1,7 +1,7 @@
 import pandas as pd
 from ship import MyShip
 import numpy as np
-from finance_calc.sailing import consumption, canal_check
+from finance_calc.sailing import consumption_empty, canal_check
 
 
 def stint(vessel: MyShip, contracts, port_data, distances):
@@ -77,12 +77,12 @@ def stint(vessel: MyShip, contracts, port_data, distances):
     if vessel.get('ice_class') == False:
         contracts['Layover Ice Costs'] = contracts['Layover Port Costs'] * 2
     else:
-        contracts['Layover Ice Costs'] = contracts['Layover Port Costs'] * 2
+        contracts['Layover Ice Costs'] = 0
     #contracts['Layover Costs'] = contracts['Layover Canal Costs'] + contracts['Layover Port Costs'] + contracts['Layover Ice Costs']
     
 
     for idx, single_contract in contracts.iterrows():
-        contracts.at[idx, 'Layover Bunker Usage'] = consumption(single_contract['Layover Speed'], vessel, single_contract) * single_contract['Layover Time']
+        contracts.at[idx, 'Layover Bunker Usage'] = consumption_empty(single_contract['Layover Speed'], vessel, single_contract) * single_contract['Layover Time']
 
     contracts['Layover Fuel Costs'] = contracts['Layover Bunker Usage'] * vessel.get('bunker_value')
 
