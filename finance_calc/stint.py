@@ -77,7 +77,7 @@ def stint(vessel: MyShip, contracts, port_data, distances):
     if vessel.get('ice_class') == False:
         contracts['Layover Ice Costs'] = contracts['Layover Port Costs'] * 2
     else:
-        contracts['Layover Ice Costs'] = contracts['Layover Port Costs'] * 2
+        contracts['Layover Ice Costs'] = 0
     #contracts['Layover Costs'] = contracts['Layover Canal Costs'] + contracts['Layover Port Costs'] + contracts['Layover Ice Costs']
     
 
