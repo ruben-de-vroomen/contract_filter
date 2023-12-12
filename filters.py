@@ -61,15 +61,18 @@ def ice_class_filter(vessel: MyShip, contracts, port_data):
 
     if vessel.get('ice_class') == True:
         return contracts
+    
 
     port_dict = pd.Series(port_data['Ice Class Required'].values,index=port_data['Name']).to_dict()
+
     
     contracts['Departure Ice'] = contracts['Start Port'].map(port_dict)
     contracts['Arrival Ice'] = contracts['Destination'].map(port_dict)
 
+
     contracts.loc[contracts['Departure Ice'] == True, 'Allowed'] += 'ICE : '
     contracts.loc[contracts['Arrival Ice'] == True, 'Allowed'] += 'ICE : '
-
+    
     return contracts
 
 

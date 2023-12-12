@@ -48,7 +48,7 @@ class MyShip:
         self.design_speed = float(vessel['Speed'].values[0])
         self.bunker_level = float(vessel['Bunker Capacity'].values[0])
         
-        if vessel['Ice Class'].values[0] == 'FALSE':
+        if vessel['Ice Class'].values[0] == False:
             self.ice_class = False
         else:
             self.ice_class = True
@@ -66,11 +66,12 @@ class MyShip:
         self.holds = int(vessel['Holds'].values[0])
 
 
-    def update(self, bunker_value, bunker_level, OPEX, current_port) -> None:
+    def update(self, bunker_value, bunker_level, OPEX, current_port, layover_start_week) -> None:
         self.bunker_level = bunker_level
         self.bunker_value = bunker_value
         self.OPEX = OPEX
         self.current_port = current_port
+        self.layover_start_week = layover_start_week
 
 
     def get(self, param: str):
