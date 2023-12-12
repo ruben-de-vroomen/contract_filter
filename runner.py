@@ -7,7 +7,7 @@ import pathlib
 
 
 
-def runner(vessel: MyShip, week_no, my_loans, testing_mode=False, layover_start_week=0):
+def runner(vessel: MyShip, week_no, my_loans, testing_mode=False):
 
     #! VV DONT TOUCH SHIT DOWN HERE VV
     print(f"working on vessel :\t\t{vessel.get('name')}")
@@ -17,8 +17,10 @@ def runner(vessel: MyShip, week_no, my_loans, testing_mode=False, layover_start_
     variable_data = f'week{week_no}'
     variable_next = f'week{week_no + 1}'
 
-    if layover_start_week == 0:
+    if vessel.get('layover_start_week') == 0:
         layover_start_week = week_no
+    else:
+        layover_start_week = vessel.get('layover_start_week')
 
 
 

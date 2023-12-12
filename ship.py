@@ -96,6 +96,7 @@ class MyShip:
             'holds' : self.holds,
             'name' : self.name,
             'current_port' : self.current_port,
+            'layover_start_week' : self.layover_start_week,
         }
         return param_dict[param]
 
