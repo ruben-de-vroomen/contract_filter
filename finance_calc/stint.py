@@ -73,7 +73,12 @@ def stint(vessel: MyShip, contracts, port_data, distances):
 
 
     contracts['Layover Port Costs'] = contracts['Start Port'].map(port_fee_dict)*vessel.get('GT')
-    contracts['Layover Costs'] = contracts['Layover Canal Costs'] + contracts['Layover Port Costs']
+
+    if vessel.get('ice_class') == False:
+        contracts['Layover Ice Costs'] = contracts['Layover Port Costs'] * 2
+    else:
+        contracts['Layover Ice Costs'] = contracts['Layover Port Costs'] * 2
+    #contracts['Layover Costs'] = contracts['Layover Canal Costs'] + contracts['Layover Port Costs'] + contracts['Layover Ice Costs']
     
 
     for idx, single_contract in contracts.iterrows():

@@ -48,7 +48,6 @@ def runner(vessel: MyShip, week_no, my_loans, testing_mode=False, layover_start_
     contracts['Current Week'] = layover_start_week
 
     contracts['Allowed'] = ''
-
     # Filters
     # weight filter
     contracts = weight_filter(vessel, contracts)
