@@ -24,9 +24,10 @@ def financials(vessel: MyShip, contracts, port_data, port_distances, loans):
     contracts = duration(vessel, contracts, port_data)
     contracts = sailing_speed(vessel, contracts, port_distances, fixed_costs)
     contracts = port_fee(vessel, contracts, port_data)
+    contracts = ice_fee(vessel, contracts, port_data)
     contracts = demurage(vessel, contracts)
     contracts = stint(vessel, contracts, port_data, port_distances)
-    contracts = ice_fee(vessel, contracts, port_data)
+    
 
     #TODO Check total cost assumption
     contracts['Fixed Costs'] = (fixed_costs / (7*24)) * contracts['Contract Time']
