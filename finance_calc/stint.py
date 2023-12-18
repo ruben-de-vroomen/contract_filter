@@ -66,8 +66,8 @@ def stint(vessel: MyShip, contracts, port_data, distances):
 
 
     # get layover time available in hours (approximated due to week innacuracies)
-    contracts.loc[contracts['Current Week'] - contracts['Start Week'] < 0, 'Layover Time'] = (contracts['Start Week'] - contracts['Current Week'])*7*24 - contracts['Departure Wait Time']
-    contracts.loc[contracts['Current Week'] - contracts['Start Week'] >= 0, 'Layover Time'] = pd.NA
+    contracts.loc[contracts['Current Week'] - contracts['Start Week'] <= 0, 'Layover Time'] = (contracts['Start Week'] - contracts['Current Week'])*7*24 - contracts['Departure Wait Time']
+    contracts.loc[contracts['Current Week'] - contracts['Start Week'] > 0, 'Layover Time'] = pd.NA
 
     contracts['Layover Speed'] = contracts['Layover Distance'] / (contracts['Layover Time'])
 

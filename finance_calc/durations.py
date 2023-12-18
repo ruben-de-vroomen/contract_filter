@@ -28,5 +28,4 @@ def duration(vessel: MyShip, contracts, port_data):
     contracts['Load-Sail Time'] = contracts['Arrival Wait Time']  + contracts['Loading Time']
     
 
-
     return contracts
